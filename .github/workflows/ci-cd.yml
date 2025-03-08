@@ -1,0 +1,85 @@
+name: CI/CD Pipeline
+
+# Trigger on push and pull requests to any branch
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+# Environment variables available across jobs
+env:
+  NODE_VERSION: 18 # Matches your VPS setup
+
+jobs:
+  # CI Job: Lint, Format, Build
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # Run Prettier check (assumes Prettier config exists)
+      - name: Check Formatting with Prettier
+        run: npx prettier --check .
+
+      # Run ESLint via Next.js lint script
+      - name: Run ESLint
+        run: npm run lint
+
+      # Build the Next.js app
+      - name: Build Application
+        run: npm run build
+
+  # CD Job: Deploy to Vercel for Development Preview
+  cd:
+    # Only run on push to main branch
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: ci # Depends on CI passing
+    steps:
+      # Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # Install Vercel CLI
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      # Deploy to Vercel (outputs preview URL)
+      - name: Deploy to Vercel
+        run: |
+          vercel --prod --confirm --token ${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      # Output the deployment URL
+      - name: Output Deployed URL
+        run: |
+          echo "Deployed to: $(vercel --token ${{ secrets.VERCEL_TOKEN }})"
