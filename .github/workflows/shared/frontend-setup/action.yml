@@ -1,12 +1,12 @@
-name: "Frontend Setup"
-description: "Install all frontend dependencies"
+name: 'Frontend Setup'
+description: 'Install all frontend dependencies'
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version-file: ".nvmrc"
+        node-version-file: '.nvmrc'
 
     - uses: pnpm/action-setup@v4
       name: Install PNPM
