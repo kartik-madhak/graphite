@@ -53,11 +53,11 @@ jobs:
           chmod 600 ec2_key.pem
 
           # SSH into EC2 and deploy
-          ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd graphite
-            git pull origin main
-            pnpm install
-            pnpm run build
+          ssh -o StrictHostKeyChecking=no -i ec2_key.pem $EC2_USER@$EC2_HOST << 'EOF'
+            cd graphite || { echo "Directory not found"; exit 1; }
+            git pull origin main || { echo "Git pull failed"; exit 1; }
+            pnpm install || { echo "PNPM install failed"; exit 1; }
+            pnpm run build || { echo "Build failed"; exit 1; }
             pm2 restart graphite || pm2 start "pnpm start" --name graphite
           EOF
 
