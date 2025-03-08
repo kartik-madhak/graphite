@@ -7,7 +7,7 @@ const Home = () => (
         Chakra UI
       </Heading>
 
-      <Text>Is good</Text>
+      <Text>Is good?</Text>
     </Box>
   </Center>
 )
