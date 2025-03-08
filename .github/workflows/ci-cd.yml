@@ -58,9 +58,6 @@ jobs:
             git pull origin main || { echo "Git pull failed"; exit 1; }
             pnpm install || { echo "PNPM install failed"; exit 1; }
             pnpm run build || { echo "Build failed"; exit 1; }
-            pm2 restart graphite || pm2 start "pnpm start" --name graphite >/dev/null 2>&1
+            ( pm2 restart graphite || pm2 start "pnpm start" --name graphite ) >/dev/null 2>&1
+            echo "Deployment completed on EC2"
           EOF
-
-      - name: Output Deployment Confirmation
-        run: |
-          echo "Deployed to EC2 at ${{ secrets.EC2_HOST }}"
