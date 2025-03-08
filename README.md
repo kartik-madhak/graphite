@@ -19,4 +19,3 @@ Authors who want to write and store their compositions in a digital format and w
 - **Self-Deployable**: Graphite is a self-deployable software that users can easily deploy and use on their own servers. It has well defined documentation for non technical users as well.
 - **Open-Source**: Graphite is an open-source software that is free to use and modify.
 - **Secure**: Graphite is designed with security in mind and uses the latest security practices to protect user data.
-
