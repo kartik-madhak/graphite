@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: pnpm run build
 
-  # CD: Deploy to Vercel for dev URL
+  # CD: Deploy to EC2
   cd:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -42,16 +42,25 @@ jobs:
       - name: Frontend Setup
         uses: ./.github/workflows/shared/frontend-setup
 
-      - name: Install Vercel CLI
-        run: pnpm install -g vercel
-
-      - name: Deploy to Vercel
-        run: |
-          vercel --prod --confirm --token ${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy to EC2
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: Output Deployed URL
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_KEY: ${{ secrets.EC2_SSH_KEY }}
         run: |
-          echo "Deployed to: $(vercel --token ${{ secrets.VERCEL_TOKEN }})"
+          # Write SSH key to a file
+          echo "$EC2_KEY" > ec2_key.pem
+          chmod 600 ec2_key.pem
+
+          # SSH into EC2 and deploy
+          ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd graphite
+            git pull origin main
+            pnpm install
+            pnpm run build
+            pm2 restart graphite || pm2 start "pnpm start" --name graphite
+          EOF
+
+      - name: Output Deployment Confirmation
+        run: |
+          echo "Deployed to EC2 at ${{ secrets.EC2_HOST }}"
