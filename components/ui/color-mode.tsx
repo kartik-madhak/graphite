@@ -1,6 +1,6 @@
 'use client'
 
-import type { IconButtonProps } from '@chakra-ui/react'
+import { ClientOnly, IconButtonProps, Skeleton } from '@chakra-ui/react'
 import { IconButton } from '@chakra-ui/react'
 import type { ThemeProviderProps } from 'next-themes'
 import { ThemeProvider, useTheme } from 'next-themes'
@@ -43,20 +43,22 @@ const ColorModeIcon = () => {
 export const ColorModeButton = (props: IconButtonProps) => {
   const { toggleColorMode } = useColorMode()
   return (
-    <IconButton
-      onClick={toggleColorMode}
-      variant="ghost"
-      aria-label="Toggle color mode"
-      size="sm"
-      {...props}
-      css={{
-        _icon: {
-          width: '5',
-          height: '5'
-        }
-      }}
-    >
-      <ColorModeIcon />
-    </IconButton>
+    <ClientOnly fallback={<Skeleton boxSize="9" />}>
+      <IconButton
+        onClick={toggleColorMode}
+        variant="ghost"
+        aria-label="Toggle color mode"
+        size="sm"
+        {...props}
+        css={{
+          _icon: {
+            width: '5',
+            height: '5'
+          }
+        }}
+      >
+        <ColorModeIcon />
+      </IconButton>
+    </ClientOnly>
   )
 }
