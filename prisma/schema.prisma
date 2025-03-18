@@ -16,4 +16,6 @@ model Title {
   description     String
   cover_image_url String
   draft           Boolean
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt @default(now())
 }

@@ -5,6 +5,7 @@ import Navbar from '@/components/custom/navbar'
 import MainContentContainer from '@/components/custom/main-content-container'
 import projectSettings from '@/project-settings.json'
 import { Inter } from 'next/font/google'
+import { Center } from '@chakra-ui/react'
 
 export const metadata: Metadata = {
   title: projectSettings.projectName,
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <Provider>
           <Navbar />
-          <MainContentContainer>{children}</MainContentContainer>
+          <MainContentContainer>
+            <Center mt={5}>{children}</Center>
+          </MainContentContainer>
         </Provider>
       </body>
     </html>
