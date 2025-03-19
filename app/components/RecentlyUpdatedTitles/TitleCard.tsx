@@ -1,53 +1,9 @@
-import { ReactElement } from 'react'
-import {
-  Box,
-  Heading,
-  Image,
-  Link as ChakraLink,
-  SimpleGrid,
-  Spinner,
-  Text,
-  VStack
-} from '@chakra-ui/react'
+import { Title } from '@/app/components/RecentlyUpdatedTitles/title'
+import { Box, Image, Link as ChakraLink, Text, VStack } from '@chakra-ui/react'
 import NextImage from 'next/image'
-import fetchTitles from '@/lib/home/fetchTitles'
-import { Prisma } from '@prisma/client'
 import Link from 'next/link'
 
-type Title = Prisma.TitleGetPayload<{
-  include: {
-    Chapter: {
-      select: {
-        id: true
-        name: true
-        index: true
-      }
-    }
-  }
-}>
-
-const RecentlyUpdatedTitles = async (): Promise<ReactElement> => {
-  const titles: Title[] = await fetchTitles()
-
-  if (!titles.length) {
-    return <Spinner size="xl" />
-  }
-
-  return (
-    <Box>
-      <Heading fontWeight="extrabold" textStyle="2xl">
-        Recently Updated
-      </Heading>
-      <SimpleGrid columns={[1, 2, 5]} mt={7} gap={10}>
-        {titles.map((title) => (
-          <TitleCard key={title.id} title={title} />
-        ))}
-      </SimpleGrid>
-    </Box>
-  )
-}
-
-const TitleCard = ({ title }: { title: Title }) => (
+export const TitleCard = ({ title }: { title: Title }) => (
   <Box>
     <Image
       asChild
@@ -86,5 +42,3 @@ const TitleCard = ({ title }: { title: Title }) => (
     </VStack>
   </Box>
 )
-
-export default RecentlyUpdatedTitles
