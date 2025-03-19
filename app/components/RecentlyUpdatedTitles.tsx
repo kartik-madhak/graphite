@@ -64,14 +64,18 @@ const TitleCard = ({ title }: { title: Title }) => (
       />
     </Image>
     <VStack align="start" mt="4">
-      <Text fontWeight="bold" fontSize="xl" lineClamp={1}>
-        {title.name.charAt(0).toUpperCase() + title.name.slice(1)}
-      </Text>
+      <ChakraLink asChild mb={2}>
+        <Link href={`/title/${title.id}`} passHref>
+          <Text fontWeight="bold" fontSize="xl" lineClamp={1}>
+            {title.name.charAt(0).toUpperCase() + title.name.slice(1)}
+          </Text>
+        </Link>
+      </ChakraLink>
       {title.Chapter.map(
         (chapter) =>
           chapter.name && (
             <ChakraLink asChild key={chapter.id}>
-              <Link href={`/chapter/${chapter.id}`} passHref>
+              <Link href={`/title/${title.id}/chapter/${chapter.id}`} passHref>
                 <Text fontSize="sm" lineClamp={1}>
                   Chapter {chapter.index + 1}: {chapter.name}
                 </Text>
