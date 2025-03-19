@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const Navbar = () => {
   return (
-    <LimitingContainer as="header" bg="background">
+    <LimitingContainer maxW={1600} as="header" bg="background">
       <Box
         py={4}
         display="flex"
@@ -15,7 +15,9 @@ const Navbar = () => {
       >
         <Box>
           <Link href="/">
-            <Text fontWeight="bold">{projectSettings.projectName}</Text>
+            <Text fontWeight="bold" textStyle="xl">
+              {projectSettings.projectName}
+            </Text>
           </Link>
         </Box>
         <Box>

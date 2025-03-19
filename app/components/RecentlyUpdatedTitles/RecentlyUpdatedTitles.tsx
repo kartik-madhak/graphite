@@ -12,7 +12,7 @@ const RecentlyUpdatedTitles = async (): Promise<ReactElement> => {
   }
 
   return (
-    <Box>
+    <Box mt={5}>
       <Heading fontWeight="extrabold" textStyle="2xl">
         Recently Updated
       </Heading>
