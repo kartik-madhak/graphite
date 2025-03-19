@@ -11,7 +11,9 @@ const LimitingContainer = (props: Props) => {
   return (
     <Container fluid as={props.as} bg={props.bg}>
       <Center>
-        <Container maxW={props.maxW || '8xl'}>{props.children}</Container>
+        <Container px="0" maxW={props.maxW || '8xl'}>
+          {props.children}
+        </Container>
       </Center>
     </Container>
   )

@@ -4,12 +4,12 @@ import NextImage from 'next/image'
 import Link from 'next/link'
 
 export const TitleCard = ({ title }: { title: Title }) => (
-  <Box>
+  <Box width={{ base: 'unset', sm: 240 }} mt={{ base: 2, sm: 0 }}>
     <Link href={`/title/${title.id}`} passHref>
       <Image
         asChild
-        width={200 * 1.2}
-        height={300 * 1.2}
+        width={{ base: 'max-content', sm: 240 }}
+        height={{ base: 'max-content', sm: 360 }}
         alt={title.name}
         borderRadius="lg"
       >
@@ -21,26 +21,40 @@ export const TitleCard = ({ title }: { title: Title }) => (
         />
       </Image>
     </Link>
-    <VStack align="start" mt="4">
-      <ChakraLink asChild mb={2}>
+    <VStack align="start" mt={{ base: 1, sm: 4 }}>
+      <ChakraLink asChild mb={{ base: 0, sm: 2 }}>
         <Link href={`/title/${title.id}`} passHref>
-          <Text fontWeight="bold" fontSize="xl" lineClamp={1}>
+          <Text
+            fontWeight="bold"
+            textStyle="responsiveSubHeading"
+            lineClamp={{ base: 2, sm: 1 }}
+          >
             {title.name.charAt(0).toUpperCase() + title.name.slice(1)}
           </Text>
         </Link>
       </ChakraLink>
-      {title.Chapter.map(
-        (chapter) =>
-          chapter.name && (
-            <ChakraLink asChild key={chapter.id}>
-              <Link href={`/title/${title.id}/chapter/${chapter.id}`} passHref>
-                <Text fontSize="sm" lineClamp={1}>
-                  Chapter {chapter.index + 1}: {chapter.name}
-                </Text>
-              </Link>
-            </ChakraLink>
-          )
-      )}
+      <Box
+        display={{
+          base: 'none',
+          sm: 'block'
+        }}
+      >
+        {title.Chapter.map(
+          (chapter) =>
+            chapter.name && (
+              <ChakraLink asChild key={chapter.id}>
+                <Link
+                  href={`/title/${title.id}/chapter/${chapter.id}`}
+                  passHref
+                >
+                  <Text fontSize="sm" textStyle="responsiveText" lineClamp={1}>
+                    Chapter {chapter.index + 1}: {chapter.name}
+                  </Text>
+                </Link>
+              </ChakraLink>
+            )
+        )}
+      </Box>
     </VStack>
   </Box>
 )
