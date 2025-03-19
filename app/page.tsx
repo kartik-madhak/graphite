@@ -1,17 +1,10 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
-import fetchTitles from '@/lib/home/fetchTitles'
+import { Box } from '@chakra-ui/react'
+import RecentlyUpdatedTitles from './components/RecentlyUpdatedTitles'
 
-const Home = async () => {
-  const titles = await fetchTitles()
-
+const Home = () => {
   return (
     <Box>
-      {titles.map((title) => (
-        <Box key={title.id}>
-          <Heading size="md">{title.name}</Heading>
-          <Text>{title.description}</Text>
-        </Box>
-      ))}
+      <RecentlyUpdatedTitles />
     </Box>
   )
 }
