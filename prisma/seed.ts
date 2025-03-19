@@ -24,8 +24,29 @@ async function main() {
     })
   )
 
-  const results = await Promise.all(upsertPromises)
-  console.log(results)
+  const chapters = titles.flatMap((title, titleIndex) =>
+    Array.from({ length: 5 }, (_, i) => ({
+      id: titleIndex * 5 + i + 1,
+      name: faker.lorem.sentence(5),
+      content: `{"time":${new Date().getTime() + i * 1000},"blocks":[{"id":"${faker.string.alphanumeric({ length: 10 })}","type":"paragraph","data":{"text":"${faker.lorem.paragraph()}"}}],"version":"2.30.6"}`,
+      index: i,
+      titleId: title.id,
+      draft: faker.datatype.boolean()
+    }))
+  )
+
+  const upsertChapterPromises = chapters.map((chapter) =>
+    prisma.chapter.upsert({
+      where: { id: chapter.id },
+      update: {},
+      create: chapter
+    })
+  )
+
+  const titlesResult = await Promise.all(upsertPromises)
+  const chaptersResult = await Promise.all(upsertChapterPromises)
+  console.log(titlesResult)
+  console.log(chaptersResult)
 }
 
 main()

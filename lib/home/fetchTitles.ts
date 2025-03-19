@@ -7,7 +7,20 @@ const fetchTitles = async () => {
       {
         updatedAt: 'desc'
       }
-    ]
+    ],
+    include: {
+      Chapter: {
+        select: {
+          id: true,
+          name: true,
+          index: true
+        },
+        orderBy: {
+          index: 'desc'
+        },
+        take: 3
+      }
+    }
   })
 }
 

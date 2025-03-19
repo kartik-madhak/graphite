@@ -3,6 +3,7 @@ import {
   Box,
   Heading,
   Image,
+  Link as ChakraLink,
   SimpleGrid,
   Spinner,
   Text,
@@ -10,7 +11,20 @@ import {
 } from '@chakra-ui/react'
 import NextImage from 'next/image'
 import fetchTitles from '@/lib/home/fetchTitles'
-import { Title } from '@prisma/client'
+import { Prisma } from '@prisma/client'
+import Link from 'next/link'
+
+type Title = Prisma.TitleGetPayload<{
+  include: {
+    Chapter: {
+      select: {
+        id: true
+        name: true
+        index: true
+      }
+    }
+  }
+}>
 
 const RecentlyUpdatedTitles = async (): Promise<ReactElement> => {
   const titles: Title[] = await fetchTitles()
@@ -50,9 +64,21 @@ const TitleCard = ({ title }: { title: Title }) => (
       />
     </Image>
     <VStack align="start" mt="4">
-      <Text fontWeight="bold" fontSize="xl">
-        {title.name}
+      <Text fontWeight="bold" fontSize="xl" lineClamp={1}>
+        {title.name.charAt(0).toUpperCase() + title.name.slice(1)}
       </Text>
+      {title.Chapter.map(
+        (chapter) =>
+          chapter.name && (
+            <ChakraLink asChild key={chapter.id}>
+              <Link href={`/chapter/${chapter.id}`} passHref>
+                <Text fontSize="sm" lineClamp={1}>
+                  Chapter {chapter.index + 1}: {chapter.name}
+                </Text>
+              </Link>
+            </ChakraLink>
+          )
+      )}
     </VStack>
   </Box>
 )

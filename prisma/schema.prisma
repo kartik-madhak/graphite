@@ -11,11 +11,24 @@ datasource db {
 }
 
 model Title {
-  id              Int     @id @default(autoincrement())
+  id              Int       @id @default(autoincrement())
   name            String
   description     String
   cover_image_url String
   draft           Boolean
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt @default(now())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now()) @updatedAt
+  Chapter         Chapter[]
+}
+
+model Chapter {
+  id        Int      @id @default(autoincrement())
+  titleId   Int
+  title     Title    @relation(fields: [titleId], references: [id])
+  name      String
+  content   String
+  index     Int
+  draft     Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }

@@ -1,0 +1,12 @@
+-- CreateTable
+CREATE TABLE "Chapter" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "titleId" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "cover_image_url" TEXT NOT NULL,
+    "draft" BOOLEAN NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Chapter_titleId_fkey" FOREIGN KEY ("titleId") REFERENCES "Title" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
