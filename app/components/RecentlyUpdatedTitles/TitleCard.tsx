@@ -5,20 +5,22 @@ import Link from 'next/link'
 
 export const TitleCard = ({ title }: { title: Title }) => (
   <Box>
-    <Image
-      asChild
-      width={200 * 1.2}
-      height={300 * 1.2}
-      alt={title.name}
-      borderRadius="lg"
-    >
-      <NextImage
-        src={title.cover_image_url}
+    <Link href={`/title/${title.id}`} passHref>
+      <Image
+        asChild
+        width={200 * 1.2}
+        height={300 * 1.2}
         alt={title.name}
-        width={200}
-        height={400}
-      />
-    </Image>
+        borderRadius="lg"
+      >
+        <NextImage
+          src={title.cover_image_url}
+          alt={title.name}
+          width={200}
+          height={400}
+        />
+      </Image>
+    </Link>
     <VStack align="start" mt="4">
       <ChakraLink asChild mb={2}>
         <Link href={`/title/${title.id}`} passHref>
