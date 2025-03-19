@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const Navbar = () => {
   return (
-    <LimitingContainer maxW={1600} as="header" bg="background">
+    <LimitingContainer maxW="100rem" as="header" bg="background">
       <Box
         py={4}
         display="flex"
