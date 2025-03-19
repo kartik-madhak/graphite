@@ -27,7 +27,15 @@ jobs:
       - name: Prettier check
         run: pnpm run prettier-check
 
+      - name: Run migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx prisma migrate deploy
+
       - name: Build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
         run: pnpm run build
 
   # CD: Deploy to EC2
@@ -47,6 +55,7 @@ jobs:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
           EC2_KEY: ${{ secrets.EC2_SSH_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           # Write SSH key to a file
           echo "$EC2_KEY" > ec2_key.pem
@@ -57,6 +66,7 @@ jobs:
             cd graphite || { echo "Directory not found"; exit 1; }
             git pull origin main || { echo "Git pull failed"; exit 1; }
             pnpm install || { echo "PNPM install failed"; exit 1; }
+            npx prisma migrate deploy || { echo "Prisma migration failed"; exit 1; }
             pnpm run build || { echo "Build failed"; exit 1; }
             ( pm2 restart graphite || pm2 start "pnpm start" --name graphite ) >/dev/null 2>&1
             echo "Deployment completed on EC2"

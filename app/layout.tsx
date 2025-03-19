@@ -4,14 +4,19 @@ import React from 'react'
 import Navbar from '@/components/custom/navbar'
 import MainContentContainer from '@/components/custom/main-content-container'
 import projectSettings from '@/project-settings.json'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
+import { Center } from '@chakra-ui/react'
 
 export const metadata: Metadata = {
   title: projectSettings.projectName,
   description: projectSettings.projectDescription
 }
 
-const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-poppins'
+})
 
 export default function RootLayout({
   children
@@ -20,10 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <Provider>
           <Navbar />
-          <MainContentContainer>{children}</MainContentContainer>
+          <MainContentContainer>
+            <Center mt={5}>{children}</Center>
+          </MainContentContainer>
         </Provider>
       </body>
     </html>

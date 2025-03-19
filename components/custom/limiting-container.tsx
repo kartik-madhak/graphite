@@ -1,16 +1,19 @@
-import { Container, Center } from '@chakra-ui/react'
+import { Center, Container } from '@chakra-ui/react'
 
 interface Props {
   children: React.ReactNode
   as: 'header' | 'main' | 'footer'
   bg?: string
+  maxW?: string | number
 }
 
 const LimitingContainer = (props: Props) => {
   return (
     <Container fluid as={props.as} bg={props.bg}>
       <Center>
-        <Container maxW="container.lg">{props.children}</Container>
+        <Container px="0" maxW={props.maxW || '8xl'}>
+          {props.children}
+        </Container>
       </Center>
     </Container>
   )

@@ -1,8 +1,34 @@
 import { defineConfig, createSystem, defaultConfig } from '@chakra-ui/react'
 
+import { defineTextStyles } from '@chakra-ui/react'
+
+export const textStyles = defineTextStyles({
+  responsiveHeading: {
+    value: {
+      fontSize: ['20px', '24px', '28px'],
+      fontWeight: 'bold'
+    }
+  },
+  responsiveSubHeading: {
+    value: {
+      fontSize: ['14px', '16px', '18px']
+    }
+  },
+  responsiveText: {
+    value: {
+      fontSize: ['12px', '14px', '16px']
+    }
+  }
+})
+
 const customConfig = defineConfig({
   theme: {
+    textStyles,
     tokens: {
+      fonts: {
+        heading: { value: 'var(--font-poppins)' },
+        body: { value: 'var(--font-poppins)' }
+      },
       colors: {
         primary: {
           50: { value: '#e6f9f0' },
