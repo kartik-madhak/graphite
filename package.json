@@ -10,6 +10,9 @@
     "prettier-check": "prettier --check .",
     "prettier": "prettier --write ."
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
     "@chakra-ui/react": "^3.9.0",
     "@emotion/react": "^11.14.0",
@@ -22,7 +25,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@types/node": "^20",
+    "@faker-js/faker": "^9.6.0",
+    "@types/node": "^20.17.24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
@@ -30,6 +34,7 @@
     "eslint-config-prettier": "^10.1.1",
     "prettier": "3.5.3",
     "prisma": "^6.5.0",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
   }
 }
