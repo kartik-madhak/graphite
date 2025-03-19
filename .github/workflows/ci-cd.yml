@@ -11,6 +11,9 @@ on:
       - '*'
 
 jobs:
+  env:
+    DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
   # CI: Lint, Prettier, Build
   ci:
     runs-on: ubuntu-latest
