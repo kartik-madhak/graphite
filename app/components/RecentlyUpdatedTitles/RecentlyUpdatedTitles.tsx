@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Box, Heading, SimpleGrid, Spinner } from '@chakra-ui/react'
+import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
 import fetchTitles from '@/lib/home/fetchTitles'
 import { Title } from './title'
 import { TitleCard } from '@/app/components/RecentlyUpdatedTitles/TitleCard'
@@ -7,8 +7,14 @@ import { TitleCard } from '@/app/components/RecentlyUpdatedTitles/TitleCard'
 const RecentlyUpdatedTitles = async (): Promise<ReactElement> => {
   const titles: Title[] = await fetchTitles()
 
-  if (!titles.length) {
-    return <Spinner size="xl" />
+  if (true) {
+    return (
+      <Box mt={5} textAlign="center">
+        <Heading fontSize="xl" color="gray.500">
+          No titles found
+        </Heading>
+      </Box>
+    )
   }
 
   return (
