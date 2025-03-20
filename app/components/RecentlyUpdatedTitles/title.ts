@@ -11,3 +11,11 @@ export type Title = Prisma.TitleGetPayload<{
     }
   }
 }>
+
+export type Chapter = Prisma.ChapterGetPayload<{
+  select: {
+    id: true
+    name: true
+    index: true
+  }
+}>

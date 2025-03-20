@@ -1,4 +1,4 @@
-import { Title } from '@/app/components/RecentlyUpdatedTitles/title'
+import { Title, Chapter } from '@/app/components/RecentlyUpdatedTitles/title'
 import { Box, Image, Link as ChakraLink, Text, VStack } from '@chakra-ui/react'
 import NextImage from 'next/image'
 import Link from 'next/link'
@@ -40,7 +40,7 @@ export const TitleCard = ({ title }: { title: Title }) => (
         }}
       >
         {title.Chapter.map(
-          (chapter) =>
+          (chapter: Chapter) =>
             chapter.name && (
               <ChakraLink asChild key={chapter.id}>
                 <Link
