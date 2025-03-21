@@ -7,7 +7,7 @@ import { TitleCard } from '@/app/components/RecentlyUpdatedTitles/TitleCard'
 const RecentlyUpdatedTitles = async (): Promise<ReactElement> => {
   const titles: Title[] = await fetchTitles()
 
-  if (true) {
+  if (titles.length === 0) {
     return (
       <Box mt={5} textAlign="center">
         <Heading fontSize="xl" color="gray.500">
