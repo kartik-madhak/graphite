@@ -17,7 +17,13 @@ const nextConfig: NextConfig = {
         hostname: 'loremflickr.com',
         port: '',
         pathname: '/**'
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+        port: '',
+        pathname: '/images/**'
+      },
     ]
   }
 
